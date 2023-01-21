@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.socket.io/socket.io-3.0.1.min.js"></script>
+</head>
+<div class="chat-box">
+ <h2> <span>-</span> <span class="innerMsg"></span></h2>
+ <div class="send">
+
+     <input type="'text" class="message" > </input>
+     <button onclick="sendMessage()" style="color: white; background-color: green; border-radius: 5px; width: 50px;">Send</button>
+ </div>
+</div>
+
+
+
+<script>
+    const socket = io('http://localhost:3001')
+    socket.on('connection')
+
+    function sendMessage(){
+const message= document.querySelector('.message').value
+        socket.emit('message',message).then(
+            document.querySelector('.message').value=""
+        )
+    }
+    socket.on('message',(message)=>{
+
+        document.querySelector('.innerMsg').innerHTML=message
+
+    })
+
+</script>
+<style>
+
+
+
+
+
+.chat-box{
+    width:500px;
+    height: 400px;
+    position: absolute;
+    transform:translate(-50%,-50%);
+    top:50%;
+    left:50%;
+    border:2px solid green;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(54, 52, 52);
+}
+.chat-box .send{
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    transform:translate(-50%,-50%);
+    top:95%;
+    left:50%;
+}
+.chat-box h2{
+   width: fit-content;
+    display: inline-block;
+    position: absolute;
+    transform:translate(-50%,-50%);
+    top:20%;
+    left:30%;
+    color: bisque;
+    font-size: 30px;
+    font-weight: 700;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+
+</style>
+</body>
+</html>
